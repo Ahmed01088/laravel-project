@@ -23,7 +23,7 @@ class MessageController extends Controller
         }
         event(new MessageSent(
             $request->sender,
-            $request->content
+            $message
         ));
 
         $message->save();
