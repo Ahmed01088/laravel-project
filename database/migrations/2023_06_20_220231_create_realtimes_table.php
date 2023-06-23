@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('lecturer_id');
+            $table->unsignedBigInteger('classroom_id');
             $table->unsignedBigInteger('quiz_id')->nullable();
             $table->boolean('is_online')->default(false);
             $table->boolean('is_quiz_started')->default(false);
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('lecturer_id')->references('id')->on('lecturers')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('classroom_id')->references('id')->on('classrooms')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

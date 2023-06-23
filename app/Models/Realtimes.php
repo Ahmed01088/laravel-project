@@ -13,6 +13,7 @@ class Realtimes extends Model
         'student_id',
         'lecturer_id',
         'quiz_id',
+        'classroom_id',
         'is_online',
         'is_quiz_started',
         'is_live'
@@ -30,6 +31,8 @@ class Realtimes extends Model
     {
         return $this->belongsTo(Quiz::class);
     }
-
-
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class);
+    }
 }

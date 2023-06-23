@@ -42,4 +42,8 @@ class Classroom extends Model
     {
         return $this->hasMany(Quiz::class);
     }
+    public function realtime()
+    {
+        return $this->hasMany(Realtime::class);
+    }
 }
