@@ -11,6 +11,7 @@ use App\Models\Student;
 use App\Models\Lecturer;
 use Illuminate\Routing\Route;
 use Laravel\Ui\Presets\React;
+use Notification;
 
 class PostController extends Controller
 {
@@ -20,6 +21,7 @@ class PostController extends Controller
         $post = Post::create($request->all());
         $body = $request->input('content');
         $tokens = Student::whereNotNull('fcm_token')->pluck('fcm_token')->all();
+        $students = Student::whereNotNull('fcm_token')->pluck('id')->all();
         if ($request->student_id != null) {
             $student = Student::find($request->student_id);
             $data = [
@@ -55,6 +57,15 @@ class PostController extends Controller
             'authorization: key=' . 'AAAAjfF8Wec:APA91bEWxNWtrsJ99bucIsqsA_QCpga1OFNOBoOMRwiFZpkGE1F0oLO84hZNEYxWj3KuMcjlaO6_icPysdIeIBFjpAkxNns70u8focMYTzcrnNxfPqaNdd2i3rZRJOr_eMY5hOGE_K0T',
             'Content-Type: application/json',
         ];
+        foreach ($students as $student) {
+            $notification = new Notification();
+            $notification->title = $data['title'];
+            $notification->body = $data['body'];
+            $notification->post_id = $post->id;
+            $notification->student_id = $student;
+            $notification->type = 'post';
+            $notification->save();
+        }
 
 
         $ch = curl_init();
@@ -257,13 +268,13 @@ class PostController extends Controller
     public function addRectOnPost(Request $request)
     {
         $post = Post::find($request->id);
-        $likes=$request->likes;
+        $likes = $request->likes;
         $post->update(['likes' => $likes]);
         event(new ReactPost($likes, $request->id));
         return response()->json([
             'message' => 'Post updated successfully.',
             'likes' => $post->likes
-        ], 200);//->toOthers();
+        ], 200); //->toOthers();
 
     }
 }

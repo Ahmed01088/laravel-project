@@ -11,6 +11,7 @@ use App\Models\Question;
 use App\Models\Quiz;
 use App\Models\Realtimes;
 use App\Models\Student;
+use Notification;
 
 class RealtimeController extends Controller
 {
@@ -28,6 +29,14 @@ class RealtimeController extends Controller
         foreach ($students as $student) {
             if ($student->fcm_token != null) {
                 array_push($tokens, $student->fcm_token);
+                $notification = new Notification();
+                $notification->title = $data['title'];
+                $notification->body = $data['body'];
+                $notification->student_id = $student->id;
+                $notification->lecturer_id = $lecturer->id;
+                $notification->type = 'live';
+                $notification->date = date('Y-m-d');
+                $notification->save();
             }
         }
         // $tokens = ['fcm_token'];
@@ -113,10 +122,21 @@ class RealtimeController extends Controller
         $course = Course::find($quiz->course_id);
         $classroom = Classroom::find($quiz->classroom_id);
         $students = Student::where('department_id', $course->department_id)->get();
+        $lecturer = Lecturer::find($quiz->lecturer_id);
+
         $tokens = [];
         foreach ($students as $student) {
             if ($student->fcm_token != null) {
                 array_push($tokens, $student->fcm_token);
+                $notification = new Notification();
+                $notification->title = $quiz->title;
+                $notification->body = 'تم اضافة اختبار جديد لمادة ' . $course->name .  ' من قبل ' . $lecturer->firstname . ' ' . $lecturer->lastname . ' للفصل الدراسي '
+                    . $classroom->name . '  الرجاء الضغط علي رساله لدخول الاختبارات ' . ' مده الاختبار هي ' . $quiz->limit_time . ' دقيقه'  . ' ' . 'من الان';
+                $notification->student_id = $student->id;
+                $notification->lecturer_id = $lecturer->id;
+                $notification->type = 'quiz';
+                $notification->date = date('Y-m-d');
+                $notification->save();
             }
             $realtime = Realtimes::where('student_id', $student->id)->first();
             if ($realtime == null) {
@@ -130,7 +150,6 @@ class RealtimeController extends Controller
                 $realtime->save();
             }
         }
-        $lecturer = Lecturer::find($quiz->lecturer_id);
 
         if (!$quiz) {
             return response()->json([
