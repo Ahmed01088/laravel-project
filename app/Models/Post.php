@@ -53,4 +53,8 @@ class Post extends Model
     {
         return $this->hasMany(CommentReply::class);
     }
+    public function notification()
+    {
+        return $this->hasMany(Notification::class);
+    }
 }

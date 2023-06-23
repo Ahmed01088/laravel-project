@@ -51,4 +51,8 @@ class StudentAffair extends Model
     {
         return $this->hasMany(Post::class);
     }
+    public function notification()
+    {
+        return $this->hasMany(Notification::class);
+    }
 }

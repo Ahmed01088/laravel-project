@@ -70,4 +70,8 @@ class Lecturer extends Model
     {
         return $this->hasMany(Realtimes::class);
     }
+    public function notification()
+    {
+        return $this->hasMany(Notification::class);
+    }
 }
