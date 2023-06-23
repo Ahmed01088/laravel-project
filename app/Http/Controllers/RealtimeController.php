@@ -231,6 +231,18 @@ class RealtimeController extends Controller
             'statue' => 200,
         ]);
     }
+    public function endQuizForStudentId($student_id)
+    {
+        $realtime = Realtimes::where('student_id', $student_id)->first();
+        $realtime->is_quiz_started = false;
+        $realtime->update(['is_quiz_started' => false]);
+        $realtime->save();
+        return response()->json([
+            'message' => 'quiz ended successfully',
+            'data' => $realtime,
+            'statue' => 200,
+        ]);
+    }
     public function updateStatus($student_id, $is_online)
     {
         $realtime = Realtimes::where('student_id', $student_id)->first();

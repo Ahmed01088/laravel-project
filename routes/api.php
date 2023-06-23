@@ -184,3 +184,5 @@ Route::get('/realtime/isQuizStarted/{student_id}', RealtimeController::class . '
 Route::get('/realtime/isOnline/{student_id}', RealtimeController::class . '@getIsOnline');
 Route::get('/realtime/push-quiz/{quiz_id}', RealtimeController::class . '@addQuiz');
 Route::get('/realtime/end-quiz/{quiz_id}', RealtimeController::class . '@endQuiz');
+//endQuisForStudentId
+Route::get('/realtime/end-quiz-for-student/{student_id}', RealtimeController::class . '@endQuizForStudentId');
