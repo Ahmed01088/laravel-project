@@ -62,6 +62,7 @@ class PostController extends Controller
             $notification->student_id = $student;
             $notification->post_id = $post->id;
             $notification->type = 'post';
+            $notification->date = date('Y-m-d H:i:s');
             $notification->save();
         }
 
