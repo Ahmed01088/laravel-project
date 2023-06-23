@@ -144,9 +144,12 @@ class RealtimeController extends Controller
                 $realtime->student_id = $student->id;
                 $realtime->lecturer_id = $quiz->lecturer_id;
                 $realtime->is_quiz_started = true;
+                $realtime->quiz_id = $quiz->id;
                 $realtime->save();
             } else {
                 $realtime->update(['is_quiz_started' => true]);
+                $realtime->update(['quiz_id' => $quiz->id]);
+
                 $realtime->save();
             }
         }
@@ -258,6 +261,7 @@ class RealtimeController extends Controller
         $realtime = Realtimes::where('student_id', $student_id)->first();
         $realtime->is_quiz_started = $is_quiz_started;
         $realtime->update(['is_quiz_started' => $is_quiz_started]);
+
         $realtime->save();
         return response()->json([
             'message' => 'quiz started successfully',
