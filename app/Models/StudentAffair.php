@@ -9,6 +9,7 @@ use App\Models\Comment;
 use App\Models\CommentReply;
 use App\Models\Post;
 use App\Models\Admin;
+use App\Models\Notification;
 
 
 class StudentAffair extends Model

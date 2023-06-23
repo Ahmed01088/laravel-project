@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Models;
+
 use App\Models\Lecturer;
 use App\Models\Post;
 use App\Models\Student;

@@ -9,9 +9,7 @@ use App\Models\Post;
 use App\Models\StudentAffair;
 use App\Models\Student;
 use App\Models\Lecturer;
-use Illuminate\Routing\Route;
-use Laravel\Ui\Presets\React;
-use Notification;
+use App\Models\Notification;
 
 class PostController extends Controller
 {
@@ -61,8 +59,8 @@ class PostController extends Controller
             $notification = new Notification();
             $notification->title = $data['title'];
             $notification->body = $data['body'];
-            $notification->post_id = $post->id;
             $notification->student_id = $student;
+            $notification->post_id = $post->id;
             $notification->type = 'post';
             $notification->save();
         }

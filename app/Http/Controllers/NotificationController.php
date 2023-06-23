@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
-use Notification;
+use App\Models\Notification;
 
 class NotificationController extends Controller
 {
@@ -63,54 +63,17 @@ class NotificationController extends Controller
         $body = $request->input('body');
 
         $tokens = Student::whereNotNull('fcm_token')->pluck('fcm_token')->all();
-
-
-        $data = [
-            'title' => $title,
-            'body' => $body,
-        ];
-
-        $payload = [
-            'registration_ids' => $tokens,
-            'notificastion' => $data,
-            'data' => $data,
-        ];
-
-        $headers = [
-            'authorization: key=' . 'AAAAjfF8Wec:APA91bEWxNWtrsJ99bucIsqsA_QCpga1OFNOBoOMRwiFZpkGE1F0oLO84hZNEYxWj3KuMcjlaO6_icPysdIeIBFjpAkxNns70u8focMYTzcrnNxfPqaNdd2i3rZRJOr_eMY5hOGE_K0T',
-            'Content-Type: application/json',
-        ];
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
-        $result = curl_exec($ch);
-        curl_close($ch);
-        return response()->json([
-            'success' => true,
-            'message' => 'Notification sent successfully',
-            'result' => json_decode($result),
-        ]);
-    }
-    public function sendNotificationForAllUsersWhenAddPost(Request $request)
-    {
-        $title = $request->input('title');
-        $body = $request->input('body');
-        $students = Student::whereNotNull('fcm_token')->get();
-        $tokens = Student::whereNotNull('fcm_token')->pluck('fcm_token')->all();
-
-        foreach ($students as $student) {
+        $student = Student::whereNotNull('fcm_token')->get();
+        foreach ($student as $student) {
             $notification = new Notification();
             $notification->title = $title;
             $notification->body = $body;
             $notification->student_id = $student->id;
             $notification->type = 'general';
+            $notification->date = date('Y-m-d H:i:s');
             $notification->save();
         }
+
 
         $data = [
             'title' => $title,

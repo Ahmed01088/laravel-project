@@ -9,6 +9,11 @@ use App\Models\Classroom;
 use App\Models\Comment;
 use App\Models\CommentReply;
 use App\Models\Post;
+use App\Models\Department;
+use App\Models\Rating;
+use App\Models\Realtimes;
+use App\Models\Notification;
+
 
 
 class Student extends Model

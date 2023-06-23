@@ -7,11 +7,11 @@ use App\Events\QuizAdded;
 use App\Models\Classroom;
 use App\Models\Course;
 use App\Models\Lecturer;
+use App\Models\Notification;
 use App\Models\Question;
 use App\Models\Quiz;
 use App\Models\Realtimes;
 use App\Models\Student;
-use Notification;
 
 class RealtimeController extends Controller
 {
