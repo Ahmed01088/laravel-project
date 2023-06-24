@@ -270,9 +270,9 @@ class PostController extends Controller
         $post = Post::find($post_id);
         //check if user(student , student affiars or lecturer ) already react on this post
         if ($request->student_id != null) {
-            $reactionExists = Reaction::where('post_id', $request->id)->where('student_id', $request->student_id)->exists();
+            $reactionExists = Reaction::where('post_id', $post_id)->where('student_id', $request->student_id)->exists();
             if ($reactionExists) {
-                $deleteReaction = Reaction::where('post_id', $request->id)->where('student_id', $request->student_id)->first();
+                $deleteReaction = Reaction::where('post_id', $post_id)->where('student_id', $request->student_id)->first();
                 $deleteReaction->delete();
             } else {
                 $reaction = new Reaction();
@@ -281,9 +281,9 @@ class PostController extends Controller
                 $reaction->save();
             }
         } else if ($request->student_affairs_id != null) {
-            $reactionExists = Reaction::where('post_id', $request->id)->where('student_affairs_id', $request->student_affairs_id)->exists();
+            $reactionExists = Reaction::where('post_id', $post_id)->where('student_affairs_id', $request->student_affairs_id)->exists();
             if ($reactionExists) {
-                $deleteReaction = Reaction::where('post_id', $request->id)->where('student_affairs_id', $request->student_affairs_id)->first();
+                $deleteReaction = Reaction::where('post_id', $post_id)->where('student_affairs_id', $request->student_affairs_id)->first();
                 $deleteReaction->delete();
             } else {
                 $reaction = new Reaction();
@@ -292,9 +292,9 @@ class PostController extends Controller
                 $reaction->save();
             }
         } else if ($request->lecturer_id != null) {
-            $reactionExists = Reaction::where('post_id', $request->id)->where('lecturer_id', $request->lecturer_id)->exists();
+            $reactionExists = Reaction::where('post_id', $post_id)->where('lecturer_id', $request->lecturer_id)->exists();
             if ($reactionExists) {
-                $deleteReaction = Reaction::where('post_id', $request->id)->where('lecturer_id', $request->lecturer_id)->first();
+                $deleteReaction = Reaction::where('post_id', $post_id)->where('lecturer_id', $request->lecturer_id)->first();
                 $deleteReaction->delete();
             } else {
                 $reaction = new Reaction();
