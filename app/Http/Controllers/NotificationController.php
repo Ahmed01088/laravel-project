@@ -50,10 +50,8 @@ class NotificationController extends Controller
 
         return response()->json(
             [
-                'success' => true,
                 'message' => 'Notification send successfully.',
                 'data' => json_decode($result),
-                'type' => $type
             ]
         );
     }
@@ -101,9 +99,8 @@ class NotificationController extends Controller
         $result = curl_exec($ch);
         curl_close($ch);
         return response()->json([
-            'success' => true,
             'message' => 'Notification sent successfully',
-            'result' => json_decode($result),
+            'data' => json_decode($result),
         ]);
     }
     public function getNotificationByStudentId($student_id)
@@ -112,7 +109,7 @@ class NotificationController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Notification sent successfully',
-            'result' => $notification,
+            'data' => $notification,
         ]);
     }
     public function getNotificationByLecturerId($lecturer_id)
@@ -121,7 +118,7 @@ class NotificationController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Notification sent successfully',
-            'result' => $notification,
+            'data' => $notification,
         ]);
     }
 }
