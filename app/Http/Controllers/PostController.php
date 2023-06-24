@@ -123,6 +123,8 @@ class PostController extends Controller
                 $post->person_name = $studentAffairs->firstname . ' ' . $studentAffairs->lastname;
                 $post->person_image = $studentAffairs->image;
             }
+            $reactions = Reaction::where('post_id', $post->id)->get();
+            $post->reaction = $reactions;
         }
         return response()->json([
             'message' => 'Posts retrieved successfully.',
