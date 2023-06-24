@@ -63,7 +63,7 @@ Route::get('/lecturer/getLecturersById/{id}', LecturerController::class . '@getL
 Route::get('/lecturer/getClassroomByLecturerId/{id}', LecturerController::class . '@getClassroomByLecturerId');
 Route::get('/lecturer/all', LecturerController::class . '@getAllLecturers');
 Route::delete('/lecturer/delete/{id}', LecturerController::class . '@destroy');
-Route::post('/lecturer/{lecturer_id}/update-fcm-token', [StudentController::class, 'updateFcmTokenByLecturerId']);
+Route::post('/lecturer/{lecturer_id}/update-fcm-token', [LecturerController::class, 'updateFcmTokenByLecturerId']);
 
 
 //? 4==>================= department ====================
