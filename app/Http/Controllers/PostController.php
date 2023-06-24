@@ -268,34 +268,47 @@ class PostController extends Controller
     public function addRectOnPost(Request $request)
     {
         $post = Post::find($request->id);
-        $reaction = new Reaction();
-        $reaction->post_id = $request->id;
-        if ($request->student_id != null) {
-            $reaction->student_id = $request->student_id;
-        } else if ($request->student_affairs_id != null) {
-            $reaction->student_affairs_id = $request->student_affairs_id;
-        } else if ($request->lecturer_id != null) {
-            $reaction->lecturer_id = $request->lecturer_id;
-        }
         //check if user(student , student affiars or lecturer ) already react on this post
-        $reactionExists = Reaction::where('post_id', $request->id)->where('student_id', $request->student_id)->exists();
-        if ($reactionExists) {
-            $post->likes = $request->likes - 1;
-            return response()->json([
-                'message' => 'You already react on this post.',
-                'data' => null
-            ], 404);
-        } else {
-            $post->likes = $request->likes + 1;
+        if ($request->student_id != null) {
+            $reactionExists = Reaction::where('post_id', $request->id)->where('student_id', $request->student_id)->exists();
+            if ($reactionExists) {
+                $deleteReaction = Reaction::where('post_id', $request->id)->where('student_id', $request->student_id)->first();
+                $deleteReaction->delete();
+            } else {
+                $reaction = new Reaction();
+                $reaction->post_id = $request->id;
+                $reaction->student_id = $request->student_id;
+                $reaction->save();
+            }
+        } else if ($request->student_affairs_id != null) {
+            $reactionExists = Reaction::where('post_id', $request->id)->where('student_affairs_id', $request->student_affairs_id)->exists();
+            if ($reactionExists) {
+                $deleteReaction = Reaction::where('post_id', $request->id)->where('student_affairs_id', $request->student_affairs_id)->first();
+                $deleteReaction->delete();
+            } else {
+                $reaction = new Reaction();
+                $reaction->post_id = $request->id;
+                $reaction->student_affairs_id = $request->student_affairs_id;
+                $reaction->save();
+            }
+        } else if ($request->lecturer_id != null) {
+            $reactionExists = Reaction::where('post_id', $request->id)->where('lecturer_id', $request->lecturer_id)->exists();
+            if ($reactionExists) {
+                $deleteReaction = Reaction::where('post_id', $request->id)->where('lecturer_id', $request->lecturer_id)->first();
+                $deleteReaction->delete();
+            } else {
+                $reaction = new Reaction();
+                $reaction->post_id = $request->id;
+                $reaction->lecturer_id = $request->lecturer_id;
+                $reaction->save();
+            }
         }
-        // increarse or decrearse likes
-        $likes = $request->likes;
-        $post->update(['likes' => $likes]);
-        event(new ReactPost($likes, $request->id));
+        $countLikes = Reaction::where('post_id', $request->id)->count();
+        event(new ReactPost($countLikes, $request->post_id));
         $reaction->save();
         //count all likes on this post
-        $countLikes = Reaction::where('post_id', $request->id)->count();
         $post->update(['likes' => $countLikes]);
+        $post->save();
         return response()->json([
             'message' => 'Post reacted successfully.',
             'data' => $post
