@@ -280,12 +280,13 @@ class PostController extends Controller
         //check if user(student , student affiars or lecturer ) already react on this post
         $reactionExists = Reaction::where('post_id', $request->id)->where('student_id', $request->student_id)->exists();
         if ($reactionExists) {
+            $post->likes = $request->likes - 1;
             return response()->json([
                 'message' => 'You already react on this post.',
                 'data' => null
             ], 404);
         } else {
-            $reaction->like = $request->like;
+            $post->likes = $request->likes + 1;
         }
         // increarse or decrearse likes
         $likes = $request->likes;
