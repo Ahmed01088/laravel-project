@@ -18,6 +18,7 @@ use App\Models\Notification;
 
 
 
+
 class Lecturer extends Model
 {
     use HasFactory;

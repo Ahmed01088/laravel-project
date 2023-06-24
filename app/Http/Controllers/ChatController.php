@@ -398,6 +398,42 @@ class ChatController extends Controller
                     $chat->reciver_name = $reciver->firstname . ' ' . $reciver->lastname;
                     $chat->reciver_image = $reciver->image;
                 }
+            } else if ($chat->student_sender_id != null && $chat->student_affairs_reciver_id != null) {
+                if ($chat->student_sender_id == $student_id) {
+                    $reciver_id = $chat->student_affairs_reciver_id;
+                    $reciver = StudentAffair::where('id', $reciver_id)->first();
+                    $chat->reciver_name = $reciver->firstname . ' ' . $reciver->lastname;
+                    $chat->reciver_image = $reciver->image;
+                } else {
+                    $sender_id = $chat->student_sender_id;
+                    $sender = Student::where('id', $sender_id)->first();
+                    $chat->reciver_name = $sender->firstname . ' ' . $sender->lastname;
+                    $chat->reciver_image = $sender->image;
+                }
+            } else if ($chat->student_sender_id != null && $chat->lecturer_reciver_id != null) {
+                if ($chat->student_sender_id == $student_id) {
+                    $reciver_id = $chat->lecturer_reciver_id;
+                    $reciver = Lecturer::where('id', $reciver_id)->first();
+                    $chat->reciver_name = $reciver->firstname . ' ' . $reciver->lastname;
+                    $chat->reciver_image = $reciver->image;
+                } else {
+                    $sender_id = $chat->student_sender_id;
+                    $sender = Student::where('id', $sender_id)->first();
+                    $chat->reciver_name = $sender->firstname . ' ' . $sender->lastname;
+                    $chat->reciver_image = $sender->image;
+                }
+            } else if ($chat->student_sender_id != null && $chat->student_reciver_id != null) {
+                if ($chat->student_sender_id == $student_id) {
+                    $reciver_id = $chat->student_reciver_id;
+                    $reciver = Student::where('id', $reciver_id)->first();
+                    $chat->reciver_name = $reciver->firstname . ' ' . $reciver->lastname;
+                    $chat->reciver_image = $reciver->image;
+                } else {
+                    $sender_id = $chat->student_sender_id;
+                    $sender = Student::where('id', $sender_id)->first();
+                    $chat->reciver_name = $sender->firstname . ' ' . $sender->lastname;
+                    $chat->reciver_image = $sender->image;
+                }
             }
         }
 
