@@ -72,4 +72,8 @@ class Student extends Model
     {
         return $this->hasMany(Notification::class);
     }
+    public function reaction()
+    {
+        return $this->hasMany(Reaction::class);
+    }
 }

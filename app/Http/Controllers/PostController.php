@@ -10,6 +10,7 @@ use App\Models\StudentAffair;
 use App\Models\Student;
 use App\Models\Lecturer;
 use App\Models\Notification;
+use App\Models\Reaction;
 
 class PostController extends Controller
 {
@@ -267,13 +268,36 @@ class PostController extends Controller
     public function addRectOnPost(Request $request)
     {
         $post = Post::find($request->id);
+        $reaction = new Reaction();
+        $reaction->post_id = $request->id;
+        if ($request->student_id != null) {
+            $reaction->student_id = $request->student_id;
+        } else if ($request->student_affairs_id != null) {
+            $reaction->student_affairs_id = $request->student_affairs_id;
+        } else if ($request->lecturer_id != null) {
+            $reaction->lecturer_id = $request->lecturer_id;
+        }
+        //check if user(student , student affiars or lecturer ) already react on this post
+        $reactionExists = Reaction::where('post_id', $request->id)->where('student_id', $request->student_id)->exists();
+        if ($reactionExists) {
+            return response()->json([
+                'message' => 'You already react on this post.',
+                'data' => null
+            ], 404);
+        } else {
+            $reaction->like = $request->like;
+        }
+        // increarse or decrearse likes
         $likes = $request->likes;
         $post->update(['likes' => $likes]);
         event(new ReactPost($likes, $request->id));
+        $reaction->save();
+        //count all likes on this post
+        $countLikes = Reaction::where('post_id', $request->id)->count();
+        $post->update(['likes' => $countLikes]);
         return response()->json([
-            'message' => 'Post updated successfully.',
-            'likes' => $post->likes
-        ], 200); //->toOthers();
-
+            'message' => 'Post reacted successfully.',
+            'data' => $post
+        ], 200);
     }
 }
