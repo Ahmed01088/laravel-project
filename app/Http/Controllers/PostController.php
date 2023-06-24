@@ -267,7 +267,7 @@ class PostController extends Controller
     }
     public function addRectOnPost(Request $request)
     {
-        $post = Post::find($request->id);
+        $post = Post::find($request->post_id);
         //check if user(student , student affiars or lecturer ) already react on this post
         if ($request->student_id != null) {
             $reactionExists = Reaction::where('post_id', $request->id)->where('student_id', $request->student_id)->exists();
