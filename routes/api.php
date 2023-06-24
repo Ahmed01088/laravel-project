@@ -136,7 +136,7 @@ Route::delete('/posts/deletebylecturerid/{id}/{lecturer_id}', PostController::cl
 Route::delete('/posts/deletebystudentaffairsid/{id}/{student_affairs_id}', PostController::class . '@checkStudentAffairsIsPostStudentAffairsAndDelete');
 Route::get('/posts/searchInPosts/{search}', PostController::class . '@searchInPosts');
 //addRectOnPost
-Route::post('/posts/react', PostController::class . '@addRectOnPost');
+Route::post('/posts/{post_id}/react', [PostController::class, 'addRectOnPost']);
 //? 11==>================= comment ====================
 Route::post('/comment/add', CommentController::class . '@store');
 Route::post('/comment/update', CommentController::class . '@update');
