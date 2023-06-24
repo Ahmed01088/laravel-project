@@ -72,7 +72,6 @@ class RealtimeController extends Controller
                 $realtime->classroom_id = $classroom->id;
                 $realtime->is_online = false;
                 $realtime->is_quiz_started = false;
-                $realtime->is_quiz_finished = false;
                 $realtime->is_live = true;
                 $realtime->save();
             } else {
@@ -103,7 +102,6 @@ class RealtimeController extends Controller
                 $realtime->classroom_id = $classroom->id;
                 $realtime->is_online = false;
                 $realtime->is_quiz_started = false;
-                $realtime->is_quiz_finished = false;
                 $realtime->is_live = false;
                 $realtime->save();
             } else {
