@@ -69,6 +69,7 @@ class RealtimeController extends Controller
                 $realtime = new Realtimes();
                 $realtime->student_id = $student->id;
                 $realtime->lecturer_id = $lecturer->id;
+                $realtime->classroom_id = $classroom->id;
                 $realtime->is_online = false;
                 $realtime->is_quiz_started = false;
                 $realtime->is_quiz_finished = false;
@@ -99,6 +100,7 @@ class RealtimeController extends Controller
                 $realtime = new Realtimes();
                 $realtime->student_id = $student->id;
                 $realtime->lecturer_id = $lecturer->id;
+                $realtime->classroom_id = $classroom->id;
                 $realtime->is_online = false;
                 $realtime->is_quiz_started = false;
                 $realtime->is_quiz_finished = false;
@@ -143,6 +145,7 @@ class RealtimeController extends Controller
                 $realtime = new Realtimes();
                 $realtime->student_id = $student->id;
                 $realtime->lecturer_id = $quiz->lecturer_id;
+                $realtime->classroom_id = $quiz->classroom_id;
                 $realtime->is_quiz_started = true;
                 $realtime->quiz_id = $quiz->id;
                 $realtime->save();
@@ -218,6 +221,7 @@ class RealtimeController extends Controller
                 $realtime = new Realtimes();
                 $realtime->student_id = $student->id;
                 $realtime->lecturer_id = $quiz->lecturer_id;
+                $realtime->classroom_id = $quiz->classroom_id;
                 $realtime->is_quiz_started = false;
                 $realtime->save();
             } else {
