@@ -304,7 +304,7 @@ class PostController extends Controller
             }
         }
         $countLikes = Reaction::where('post_id', $request->id)->count();
-        event(new ReactPost($countLikes, $request->post_id));
+        event(new ReactPost($countLikes, $post->id));
         //count all likes on this post
         $post->update(['likes' => $countLikes]);
         $post->save();
