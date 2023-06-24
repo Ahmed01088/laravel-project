@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Controllers\Controller;
 use App\Models\Classroom;
 use Illuminate\Http\Request;
@@ -34,7 +35,19 @@ class LecturerController extends Controller
             'data' => $lecturer
         ], 200);
     }
-
+    public function updateFcmTokenByLecturerId(Request $request, $lecturer_id)
+    {
+        $validatedData = $request->validate([
+            'fcm_token' => 'required'
+        ]);
+        $lecturer = Lecturer::find($lecturer_id);
+        $lecturer->fcm_token = $validatedData['fcm_token'];
+        $lecturer->save();
+        return response()->json([
+            'message' => 'FCM token updated successfully!',
+            'data' => $lecturer
+        ], 200);
+    }
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
