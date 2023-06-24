@@ -276,7 +276,7 @@ class PostController extends Controller
                 $deleteReaction->delete();
             } else {
                 $reaction = new Reaction();
-                $reaction->post_id = $request->id;
+                $reaction->post_id = $post_id;
                 $reaction->student_id = $request->student_id;
                 $reaction->save();
             }
@@ -287,7 +287,7 @@ class PostController extends Controller
                 $deleteReaction->delete();
             } else {
                 $reaction = new Reaction();
-                $reaction->post_id = $request->id;
+                $reaction->post_id = $post_id;
                 $reaction->student_affairs_id = $request->student_affairs_id;
                 $reaction->save();
             }
@@ -298,13 +298,13 @@ class PostController extends Controller
                 $deleteReaction->delete();
             } else {
                 $reaction = new Reaction();
-                $reaction->post_id = $request->id;
+                $reaction->post_id = $post_id;
                 $reaction->lecturer_id = $request->lecturer_id;
                 $reaction->save();
             }
         }
-        $countLikes = Reaction::where('post_id', $request->id)->count();
-        event(new ReactPost($countLikes, $post->id));
+        $countLikes = Reaction::where('post_id', $post_id)->count();
+        event(new ReactPost($countLikes, $post_id));
         //count all likes on this post
         $post->update(['likes' => $countLikes]);
         $post->save();
