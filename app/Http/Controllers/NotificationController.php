@@ -106,4 +106,22 @@ class NotificationController extends Controller
             'result' => json_decode($result),
         ]);
     }
+    public function getNotificationByStudentId($student_id)
+    {
+        $notification = Notification::where('student_id', $student_id)->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'Notification sent successfully',
+            'result' => $notification,
+        ]);
+    }
+    public function getNotificationByLecturerId($lecturer_id)
+    {
+        $notification = Notification::where('student_id', $lecturer_id)->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'Notification sent successfully',
+            'result' => $notification,
+        ]);
+    }
 }

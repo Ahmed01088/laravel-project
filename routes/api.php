@@ -173,6 +173,9 @@ Route::post('/rating/add', RatingController::class . '@store');
 
 Route::post('/notification/sendNotification', NotificationController::class . '@sendNotification');
 Route::post('/notification/sendNotificationsForAllStudents', NotificationController::class . '@sendNotificationForAllUsersByFCMToken');
+Route::get('/notification/getNotificationByStudentId/{student_id}', NotificationController::class . '@getNotificationByStudentId');
+Route::get('/notification/getNotificationByLcturerId/{lecturer_id}', NotificationController::class . '@getNotificationByLecturerId');
+
 //? 17==>================= realtime ======================
 Route::get('/realtime/livestrated/{classroom_id}', RealtimeController::class . '@stratLive');
 Route::get('/realtime/finishLive/{classroom_id}', RealtimeController::class . '@closeLive');
