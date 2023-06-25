@@ -236,8 +236,8 @@ class RealtimeController extends Controller
     public function endQuizForStudentId($student_id)
     {
         $realtime = Realtimes::where('student_id', $student_id)->first();
-        $realtime->is_quiz_started = false;
-        $realtime->update(['is_quiz_started' => false]);
+        $realtime->is_quiz_started = 0;
+        $realtime->update(['is_quiz_started' => 0]);
         $realtime->save();
         return response()->json([
             'message' => 'quiz ended successfully',
